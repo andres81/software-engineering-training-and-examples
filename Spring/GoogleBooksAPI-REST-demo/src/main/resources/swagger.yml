@@ -1,0 +1,79 @@
+openapi: "3.0.3"
+info:
+  title: "Google Books API application"
+  version: "0.0.1-SNAPSHOT"
+paths:
+  /books:
+    get:
+      summary: "Search for books by search text, with an optional language given."
+      description: |
+        RESTFull endpoint to retrieve books from Google Books API with just a search text and optionally a language
+        code. Maximum 10 books will be returned and ordered on publication date.
+      parameters:
+        - in: query
+          name: searchText
+          schema:
+            type: string
+          required: true
+          description: ""
+        - in: query
+          name: languageCode
+          schema:
+            type: string
+            format: '[a-bA-B]{2}'
+          required: false
+          description: ""
+      responses:
+        '200':
+          description: "A list of books retrieved from Google Books API"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/book"
+        '400':
+          description: "Something is wrong with the request that was send to the application."
+        '500':
+          description: "Something went wrong within the application."
+        '503':
+          description: "Service is temporarily unavailable. Please try again later."
+components:
+  schemas:
+    book:
+      description: "A representation of a book retrieved from Google Books API."
+      type: object
+      properties:
+        titel:
+          type: string
+        auteurs:
+          type: array
+          items:
+            type: string
+        isbn-10:
+          type: string
+        isbn-13:
+          type: string
+        publicatieDatum:
+          type: string
+          description: |
+            Date of publication. If Google did not return a date, but only a year, than only the year will show.
+            Format: <day, as a number> <month, written as a word> <year, written as a number>.
+          example: 1 June 2022
+    errorResponse:
+      description: "A Json object indicating that something went wrong and what that is."
+      type: object
+      required:
+        - message
+        - traceid
+      properties:
+        message:
+          type: string
+        traceId:
+          type: string
+          description: |
+            The Sleuth traceid that can be traced back in the logs. This is very useful for the maintenance team to 
+            trace back in the logs where and when it went wrong.
