@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="https://www.andreschepers.eu/bakery/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://www.andreschepers.eu/bakery/schemas" targetNamespace="https://www.andreschepers.eu/bakery/schemas">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://www.andreschepers.eu/bakery/schemas">
+            <xs:element name="BakeryRequest" type="sch:BakeryRequestType"/>
+            <xs:complexType name="AdressType">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="street" type="xs:string"/>
+                    <xs:element name="housenr" type="xs:string"/>
+                    <xs:element name="postalcode" type="xs:string"/>
+                    <xs:element name="city" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerDetailsType">
+                <xs:sequence>
+                    <xs:element name="Adress" type="sch:AdressType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProductType">
+                <xs:sequence>
+                    <xs:element name="quantity">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="100"/>
+                                <xs:enumeration value="250"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="productId">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="1"/>
+                                <xs:enumeration value="2"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="productName">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="Apple Pie"/>
+                                <xs:enumeration value="Fullweed bread"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProductsType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="sch:ProductType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="OrderType">
+                <xs:sequence>
+                    <xs:element name="CustomerDetails" type="sch:CustomerDetailsType"/>
+                    <xs:element name="Products" type="sch:ProductsType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BakeryRequestType">
+                <xs:sequence>
+                    <xs:element name="Order" type="sch:OrderType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="BakeryResponse" type="sch:BakeryResponseType"/>
+            <xs:complexType name="OrderConfirmationDetailsType">
+                <xs:sequence>
+                    <xs:element name="orderNr" type="xs:string"/>
+                    <xs:element name="CustomerDetails" type="sch:CustomerDetailsType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BakeryResponseType">
+                <xs:sequence>
+                    <xs:element name="OrderConfirmationDetails" type="sch:OrderConfirmationDetailsType"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="BakeryRequest">
+        <wsdl:part element="tns:BakeryRequest" name="BakeryRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="BakeryResponse">
+        <wsdl:part element="tns:BakeryResponse" name="BakeryResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Bakery">
+        <wsdl:operation name="Bakery">
+            <wsdl:input message="tns:BakeryRequest" name="BakeryRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:BakeryResponse" name="BakeryResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BakerySoap11" type="tns:Bakery">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Bakery">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="BakeryRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="BakeryResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BakeryService">
+        <wsdl:port binding="tns:BakerySoap11" name="BakerySoap11">
+            <soap:address location="http://localhost:8080/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

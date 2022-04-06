@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="https://www.andreschepers.eu/bakery/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:BakeryRequest>
+         <sch:Order>
+            <sch:CustomerDetails>
+               <sch:Adress>
+                  <sch:name>?</sch:name>
+                  <sch:street>?</sch:street>
+                  <sch:housenr>?</sch:housenr>
+                  <sch:postalcode>?</sch:postalcode>
+                  <sch:city>?</sch:city>
+               </sch:Adress>
+            </sch:CustomerDetails>
+            <sch:Products>
+               <!--Zero or more repetitions:-->
+               <sch:Product>
+                  <sch:quantity>?</sch:quantity>
+                  <sch:productId>?</sch:productId>
+                  <sch:productName>?</sch:productName>
+               </sch:Product>
+            </sch:Products>
+         </sch:Order>
+      </sch:BakeryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
