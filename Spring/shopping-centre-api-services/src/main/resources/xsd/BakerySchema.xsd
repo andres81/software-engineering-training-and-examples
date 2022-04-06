@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://www.andreschepers.eu/bakery/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="BakeryRequest" type="sch:BakeryRequestType" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+    <xs:complexType name="AdressType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="street"/>
+            <xs:element type="xs:string" name="housenr"/>
+            <xs:element type="xs:string" name="postalcode"/>
+            <xs:element type="xs:string" name="city"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CustomerDetailsType">
+        <xs:sequence>
+            <xs:element type="sch:AdressType" name="Adress" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProductType">
+        <xs:sequence>
+            <xs:element name="quantity">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="100"/>
+                        <xs:enumeration value="250"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="productId">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="productName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Apple Pie"/>
+                        <xs:enumeration value="Fullweed bread"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProductsType">
+        <xs:sequence>
+            <xs:element type="sch:ProductType" name="Product" maxOccurs="unbounded" minOccurs="0" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OrderType">
+        <xs:sequence>
+            <xs:element type="sch:CustomerDetailsType" name="CustomerDetails" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+            <xs:element type="sch:ProductsType" name="Products" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BakeryRequestType">
+        <xs:sequence>
+            <xs:element type="sch:OrderType" name="Order" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="BakeryResponse" type="sch:BakeryResponseType" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+    <xs:complexType name="OrderConfirmationDetailsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="orderNr"/>
+            <xs:element type="sch:CustomerDetailsType" name="CustomerDetails" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BakeryResponseType">
+        <xs:sequence>
+            <xs:element type="sch:OrderConfirmationDetailsType" name="OrderConfirmationDetails" xmlns:sch="https://www.andreschepers.eu/bakery/schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

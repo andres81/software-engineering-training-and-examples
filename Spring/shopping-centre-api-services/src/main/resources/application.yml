@@ -1,0 +1,6 @@
+spring:
+  webservices:
+    xsd-locations: "classpath:/xsd"
+    servlet:
+      init:
+        transformWsdlLocations: true
