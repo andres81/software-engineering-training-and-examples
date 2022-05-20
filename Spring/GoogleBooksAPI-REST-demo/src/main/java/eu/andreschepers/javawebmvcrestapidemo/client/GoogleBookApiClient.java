@@ -57,6 +57,12 @@ public class GoogleBookApiClient {
         }
     }
 
+    /**
+     * See: https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html#spring-webflux
+     * @param languageCode
+     * @param searchText
+     * @return
+     */
     private Mono<VolumeResources> makeRequest(String languageCode, String searchText) {
         return webClient.get()
             .uri(properties.getUrl(), uri -> addQueryParams(uri, languageCode, searchText))
@@ -74,6 +80,11 @@ public class GoogleBookApiClient {
             .queryParam("orderBy", "newest").build();
     }
 
+    /**
+     *
+     * @param clientResponse
+     * @return
+     */
     private Mono<? extends Throwable> handle4xxResponse(ClientResponse clientResponse) {
         return clientResponse.bodyToMono(String.class)
             .map(errorResponse -> {
@@ -82,6 +93,11 @@ public class GoogleBookApiClient {
             });
     }
 
+    /**
+     *
+     * @param clientResponse
+     * @return
+     */
     private Mono<? extends Throwable> handle5xxResponse(ClientResponse clientResponse) {
         return clientResponse.bodyToMono(String.class)
             .map(errorResponse -> {

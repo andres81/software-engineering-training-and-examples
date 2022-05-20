@@ -33,6 +33,13 @@ public final class KeyStoreUtil {
 
     private static final String TYPE = "pkcs12";
 
+    /**
+     * https://stackoverflow.com/questions/51404007/creating-a-truststore-in-java
+     * @param alias
+     * @param password
+     * @param certificate
+     * @return
+     */
     public KeyStore trustStore(String alias, String password, X509Certificate certificate) {
         if (alias == null || password == null || certificate == null) {
             throw new IllegalArgumentException();

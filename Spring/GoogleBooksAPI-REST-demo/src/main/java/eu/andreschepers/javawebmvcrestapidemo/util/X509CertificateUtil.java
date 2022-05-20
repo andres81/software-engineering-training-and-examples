@@ -33,6 +33,11 @@ public class X509CertificateUtil {
     private static final String PEM_LAST_LINE = "-----END CERTIFICATE-----";
     private static final String CERTIFICATE_TYPE = "X.509";
 
+    /**
+     * Example question SO: https://stackoverflow.com/questions/9739121/convert-a-pem-formatted-string-to-a-java-security-cert-x509certificate
+     * @param x509Certificate
+     * @return
+     */
     public X509Certificate certificateFromString(String x509Certificate) {
         if (x509Certificate == null) {
             throw new NullPointerException();
