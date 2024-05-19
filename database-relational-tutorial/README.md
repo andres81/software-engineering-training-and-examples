@@ -1,6 +1,7 @@
 # Database (relational) tutorial
 
-## Using several databases (Postgres, MySql, H2) to introduce a student to databases.
+## Using several databases (Postgres, MySql, H2) to introduce a student to
+database .
 
 # Sources
 
@@ -28,6 +29,14 @@ databases.
 
 # Lessons
 
-## Local Setup
+## 1. Local Setup
 
 ### [Setting up your local environment with Docker to start experimenting](lesson1-local-setup/README.md)
+
+## 2. Transactions: The A in ACID
+
+### [Using transactions to execute multiple statements as one atomic operation](lesson2-transactions/README.md)
+
+## 3. Isolation level of Transactions: The I in ACID
+
+### [What one transaction does, is not necessarily visible to another transactionwhile they are both going on.](lesson3-isolation/README.md)
