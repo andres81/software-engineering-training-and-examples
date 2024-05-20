@@ -202,7 +202,7 @@ the tables present in the currently connected database.
 
 </details>
 
-# psql functions
+## psql functions
 
 Psql also has functions that can be used, to gain more insight in the current
 situation.
@@ -223,3 +223,103 @@ postgres=#
 This will become important when testing different transactions. To illustrate
 this, open two terminals, login and check that the process ids are different.
 
+# Installing and starting the MySql server image
+
+## Step 1: Create the container
+
+<details>
+<summary>Create the container</summary>
+
+```bash
+docker run -d --name database-tutorial-mysql -e MYSQL_ROOT_PASSWORD=pw mysql
+```
+
+After the first time, using the __*docker run*__ command, one should use:
+
+```bash
+docker container start database-tutorial-mysql
+```
+
+</details>
+
+## Step 2: Get a command line interface (CLI) in the container and login to MySql (mysql-client)
+
+<details>
+<summary>mysql client cli</summary>
+
+```bash
+docker exec -it database-tutorial-mysql bash
+```
+
+Login to the database:
+
+```
+mysql -u root --password="pw"
+```
+
+</details>
+
+## Step 3: Interact with the database with *mysql-client cli*
+
+<details>
+<summary>mysql cli commands</summary>
+
+```mysql-client
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+```
+
+```mysql-client
+
+mysql> use mysql;
+
+Database changed
+
+mysql>
+
+```
+
+### Last but not least: Process id of current session
+
+```
+mysql> status
+
+--------------
+mysql  Ver 8.4.0 for Linux on x86_64 (MySQL Community Server - GPL)
+
+Connection id:          11
+Current database:       mysql
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         8.4.0 MySQL Community Server - GPL
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Server characterset:    utf8mb4
+Db     characterset:    utf8mb4
+Client characterset:    latin1
+Conn.  characterset:    latin1
+UNIX socket:            /var/run/mysqld/mysqld.sock
+Binary data as:         Hexadecimal
+Uptime:                 21 min 44 sec
+
+Threads: 2  Questions: 56  Slow queries: 0  Opens: 195  Flush tables: 3  Open tables: 114  Queries per second avg: 0.042
+--------------
+```
+
+The connection id is what is importan there, to see we have different transaction going on in the next lessons.
+
+</details>
