@@ -1,1 +1,1 @@
-# Lesson 2: Transactions
+# Lesson 2 - Transactions: The A in ACID

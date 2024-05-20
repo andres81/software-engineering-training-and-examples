@@ -39,4 +39,9 @@ databases.
 
 ## 3. Isolation level of Transactions: The I in ACID
 
-### [What one transaction does, is not necessarily visible to another transactionwhile they are both going on.](lesson3-isolation/README.md)
+### [What one transaction does, is not necessarily visible to another transaction, while they are both in progress.](lesson3-isolation/README.md)
+
+## 4. Optimistic/pessimistic locking
+
+### [How to prevent overwriting data by other transactions](lesson4-locking/READMD.md)
+
