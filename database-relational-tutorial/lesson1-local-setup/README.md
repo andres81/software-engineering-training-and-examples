@@ -13,7 +13,7 @@
 <summary>Create the container</summary>
 
 ```bash
-docker run -d --name database-tutorial -e POSTGRES_PASSWORD=pw postgres
+docker run -d --name database-tutorial -p 55000:5432 -e POSTGRES_PASSWORD=pw postgres
 ```
 
 After the first time, using the __*docker run*__ command, one should use:
@@ -320,6 +320,6 @@ Threads: 2  Questions: 56  Slow queries: 0  Opens: 195  Flush tables: 3  Open ta
 --------------
 ```
 
-The connection id is what is importan there, to see we have different transaction going on in the next lessons.
+The connection id is what is important here, to see we have different transaction going on in the next lessons.
 
 </details>
