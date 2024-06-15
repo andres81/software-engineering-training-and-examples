@@ -176,3 +176,20 @@ the steps we took, to more easily see the process of what we just did above.
 3. Update both the car and customer entities, with the id of the newly created
    agreement in the database.
 
+If in between, before step 3, the database shuts down, you have finished steps
+1 and 2, but step 3 would not have been done. The result would have been that
+the car and customer would have been updated, and subsequently have been
+registered to be part of an agreement where the car is no longer available, and
+the customer is renting a car.
+
+If instead, the database guarantees all or nothing, for a set of operations, and
+sees a set of database interactions, 2 or more, as one transaction that
+guarantees to succeed or never happened at all, then the above problem never
+occurs.
+
+Another problem, that if in between steps 2 and 3 another transaction would
+do an update to a car that then is coupled to another agreement and subsequently
+a customer, is not solved this way: Transactions are not protected from updating
+each other with mere transactions.
+The solution to this problem, is
+[locking](https://en.wikipedia.org/wiki/ACID#isolation%20failure:~:text=in%20other%20tables.-,Isolation%20failure,-%5Bedit%5D).
