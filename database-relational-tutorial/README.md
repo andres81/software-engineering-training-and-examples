@@ -43,5 +43,5 @@ databases.
 
 ## 4. Optimistic/pessimistic locking
 
-### [How to prevent overwriting data by other transactions](lesson4-locking/READMD.md)
+### [How to prevent overwriting data by other transactions](lesson4-locking/README)
 
