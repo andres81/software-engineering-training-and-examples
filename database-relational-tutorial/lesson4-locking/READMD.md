@@ -28,6 +28,21 @@ updated, so that transactions subsequently have to wait for each other. This
 comes with a huge performance penalty, though, and therefore optimistic locking
 is preferred over pessimistic.
 
+## Optimistic locking
 
+In practice, it is very simple how it works with optimistic locking. Put a
+version label on each row, in the form of a column that will act as a counter.
 
-.
+When updating, check that the version in the database, is still the same as
+when reading the row:
+
+```sql
+SELECT id, version AS old_version, balance, ...
+FROM SOME_TABLE;
+```
+
+```sql
+UPDATE SOME_TABLE
+SET balance = 300.15, version = version + 1
+WHERE version = old_version;
+```
