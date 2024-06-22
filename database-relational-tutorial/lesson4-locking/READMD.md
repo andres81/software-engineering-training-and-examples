@@ -1,5 +1,13 @@
 # Lesson 4 - Optimistic/pessimistic locking
 
+### Sources
+
+* https://medium.com/@abhirup.acharya009/managing-concurrent-access-optimistic-locking-vs-pessimistic-locking-0f6a64294db7
+* https://medium.com/nerd-for-tech/optimistic-vs-pessimistic-locking-strategies-b5d7f4925910
+* https://www.baeldung.com/jpa-optimistic-locking
+* https://www.ibm.com/docs/en/db2/11.5?topic=overview-optimistic-locking
+* https://en.wikipedia.org/wiki/Optimistic_concurrency_control
+
 We covered transactions and isolation levels when working with updates to the
 database, in a concurrent fashion.
 
@@ -18,6 +26,8 @@ however properly implemented with optimistic locking.
 With pessimistic locking, a lock is applied to a row that is read, before being
 updated, so that transactions subsequently have to wait for each other. This
 comes with a huge performance penalty, though, and therefore optimistic locking
-is preferred over pessimistic
+is preferred over pessimistic.
+
+
 
 .
