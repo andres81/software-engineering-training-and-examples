@@ -35,6 +35,13 @@ background process. This way you don't spent energy on it actively, but
 passively
 and using energy from much bigger energy source.
 
+Part of this methodology is of course, using the act of reproducing, instead of
+recognising new material to memorise by heart. Only the act of (trying to)
+reproducing will make you learn new material for life in combination with
+repitition. Repeating the material is a choice to do so by the reader, the
+material offers a way to help you reproduce the material to learn by giving
+question answer combinations.
+
 # Chapter 1
 
 # Chapter 2
@@ -187,7 +194,71 @@ and using energy from much bigger energy source.
 * Stores the menu commands and settings of this menu in a config file: menu.lst,
   in the /boot/grub/ directory. Red Hat distros store it in grub.conf instead of
   menu.lst
-*
+* menu.lst has two sections:
+    * Global definitions (Must appear first, concern overall operation of the
+      menu)
+    * Operating system boot definitions
+* Settings global (6):
+    * color: Fore- and background colors in the menu (selected and unselected
+      items)
+    * default: Default menu option selected
+    * fallback: Fallback if default fails
+    * hiddenmenu: Don't display the menu to choose a OS
+    * splashimage: Points to image that forms the background
+    * timeout: Waiting time before the default is chosen
+* Settings individual menu items (5):
+    * title: Menu item listing title
+    * root: Disk and partition where /boot folder partition is located (
+      format: (hd0,0), first disk, first partition).
+    * kernel: Where the kernel image file lives in the /boot folder.
+    * initrd: Defines initial RAM disk file or filesystem, necessary drivers for
+      kernel to talk to hardware. Used for complex hardware, for which the
+      kernel doesn't have compiled into it
+    * rootnoverify: Windows OS
+* Installing Grub Legacy:
+    * grub-install /dev/sda
+    * grub-install 'hd(0,0)'
+
+#### Questions:
+
+1. what is Grub Legacy?
+2. What is the location of the Grub Legacy config file?
+3. How is the config file build up?
+4. How many options to configure are there in the config file? What are they?
+5. How to install Grub Legacy?
+
+#### Answers:
+
+1. A Boot Loader, that offers in addition to laoding an OS, a menu to choose a
+   OS
+2. Two locations:
+    1. /boot/grub/menu.lst
+    2. /boot/grub/grub.conf on Red Hat systems
+3. Two sections
+    1. Menu configuration (color, default option, timeout etc...)
+    2. Menu entries, each one representing an OS that can be loaded
+4. Depending on the menu section:
+    1. Menu config, (6) options:
+        1. color
+        2. default
+        3. fallback
+        4. hiddenmenu
+        5. splashimage
+        6. timeout
+    2. Menu items, (5) options:
+        1. title
+        2. root
+        3. kernel
+        4. initrd
+        5. rootnoverify
+5. grub-install /dev/sda or grub-install hd(0,0)
+
+### Using GRUB 2 as the Boot Loader
+
+How can I arrive at the conclusion someone cannot teach me anything, when all I
+had to experience was that one situation with you, in which you didn't teach me
+anything for whatever reason. Even if it seemed to be your inability it didn't
+happen.
 
 # GNU Free Documentation License
 
