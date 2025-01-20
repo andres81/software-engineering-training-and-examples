@@ -255,11 +255,6 @@ question answer combinations.
 
 ### Using GRUB 2 as the Boot Loader
 
-How can I arrive at the conclusion someone cannot teach me anything, when all I
-had to experience was that one situation with you, in which you didn't teach me
-anything for whatever reason. Even if it seemed to be your inability it didn't
-happen.
-
 # GNU Free Documentation License
 
 Version 1.3, 3 November 2008
