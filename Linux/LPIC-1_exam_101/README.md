@@ -44,6 +44,91 @@ question answer combinations.
 
 # Chapter 1
 
+## 1.1 Understanding Command-Line Basics
+
+## 1.2 Editing Text Files
+
+## 1.3 Processing Text Using Filters
+
+### File-Combining Commands
+
+* cat
+    * Often used to display file contents on the screen, although its primary
+      use is concatenating contents of files.
+    * To concatenate:
+        * cat file1.txt file2.txt
+    * Commonly used options:
+        * -A (--show-all): Equivalent to -vET
+        * -E (--show-ends): $ in case of newline linefeed
+        * -n (--number): number file lines
+        * -s (--squeeze-blank): do not repeat blank lines
+        * -T (--show-tabs): ^I in case of a tab
+        * -v (--show-nonprinting): non printing characters
+* paste: file contents as two columns next to each other
+
+### File-Transforming Commands
+
+#### Uncovering with *od*
+
+* od: shows the files text in octal by default.
+    * Can show it in octal, hexa, decimal and ASCII
+    * With the -cb option, the characters are also shown
+
+#### Separating with *split*
+
+* Splits a file by line count or other means.
+* Will create new files with suffixes, starting at aa, ab, ac... so forth.
+
+### File-Formatting Commands
+
+#### Organizing with *sort*
+
+* sort file1.txt: Will output the sorted contents of the file, but the file
+  remains untouched.
+* sort -n file_with_numbers2.txt: Will properly order entries that are numbers.
+* sort -o outputfile.txt file3.txt: Will sort the contents of file3.txt and
+  store it in outputfile.txt
+
+#### Numbering with *nl*
+
+* nl file1.txt: Will number all non-blank lines
+* nl -ba file2.txt: Will number all, including blank, lines.
+
+### File-Viewing Commands
+
+#### Using *more* or *less*
+
+* *more* and *less* both are pagers
+* *less* has more functionality, and reads faster because it does not read the
+  entire file but page by page.
+
+#### Looking at fiels with *head*
+
+* *head* command shows by default the first 10 lines of a file
+* Override with -n or just -*n*:
+    * head -n 15 file1.txt
+    * head -15 file2.txt
+
+#### Viewing Files with *tail*
+
+* By default, last 10 lines
+* Override like with head
+* Use the + sign to start displaying from that line to the end
+    * tail n, +42 fileendsonlyplease.txt
+* Use -f to follow the file, handy with log files.
+    * tail -f somepoorlogfilebeingwatched.txt
+
+### File-Summarizing Commands
+
+#### Counting with *wc*
+
+* wc file, will show the files number of lines, words and bytes.
+*
+
+## 1.4 Using Regular Expressions
+
+## 1.5 Using Streams, Rediction, and Pipes
+
 # Chapter 2
 
 # Chapter 3
@@ -254,6 +339,128 @@ question answer combinations.
 5. grub-install /dev/sda or grub-install hd(0,0)
 
 ### Using GRUB 2 as the Boot Loader
+
+* Different place and name than Grub Legacy for the config file
+    * BIOS: /boot/grub/grub.cfg or /boot/grub2/grub.cfg
+    * UEIF: /boot/efi/EFI/distro-name/grub.cfg
+* Config file uses different numbering:
+    * starting at 0 for hardrive
+    * starting with 1 for partitions
+* Config file uses set command
+* Commands used:
+    * menuentry:
+    * set root
+    * linux, linux16
+    * linuxefi
+    * initrd
+    * initrdefi
+    * Example:
+
+```
+menuentry "CentOS Linux" {
+    set root=(hd1,1)
+    linux16 /vmlinuz
+    initrd /initramfs
+}
+```
+
+* Non-linux OSes are defined the same as Linux
+* Never use /boot/grub/grub.cfg, but instead the config files under /etc/grub.d
+* The global config for Grub2 can be found at /etc/default/grub, but also never
+  edit that one either: /etc/grub.d instead
+* No need to explicitly install Grub2 like Grub Legacy, only rebuild the main
+  installation file.
+* Update using: grub2-mkconfig > <target file>, Ubuntu: update-grub utility
+
+## 5.4 The Initialization Process
+
+* Two initialization daemons you need to know:
+    * SysVinit
+    * Systemd
+* Service startups classically handled by the init program, found in one of the
+  directories:
+    * /etc/
+    * /bin/
+    * /sbin/
+* To find out what system is used:
+    * Command: "which init", f.e.: /sbin/init, then: "readlink -f /sbin/init",
+      /usr/lib/systemd/systemd
+    * Check PID (proess ID): "ps -p 1"
+
+## 5.5 Using the systemd Initialization Process
+
+* Services can be started when:
+    * The system boots
+    * When a particular hardware is attached
+    * When particular other services are started
+
+### Exploring Unit Files
+
+* A unit defines:
+    * A service
+    * A group of services
+    * An action
+* Each unit consists of:
+    * A name
+    * A type
+    * A configuration file
+* In total now 12 different system unit types
+* To manage services: systemctl
+    * Example, to get a list of loaded units: systemctl list-units
+* Groups of services are started via target unit files. Examples are:
+    * graphical.target
+    * multi-user.target
+    * runleveln.target
+* Master systemd config file: /etc/systemd/system.conf. Advise is to use the man
+  page man systemd-system.conf
+
+### Focusing on Service Unit Files
+
+* Service unit files contain information regarding:
+    * which environment file to use
+    * when it should be started
+    * what targets want this service started
+* Unit files are located in separate directories
+* The directory location of a unit file is critical: Determines precedence order
+* Ascending priority order of directories in which unit files are found:
+    * /etc/systemd/system/
+    * /run/systemd/system/
+    * /usr/lib/systemd/system/
+* List available unit files: systemctl list-unit-files
+* 12 different enablement states exist, three are:
+    * enabled: will start at system boot
+    * disabled: not start at system boot
+    * static: Only started if another unit depends on it
+* Finding a unit file is done by showing the contents of the file, the first
+  line will show its location: systemctl cat ntpd.service
+* Three primary configuration sections in unit files:
+    * [Unit]: Containing basic directives (7 fields)
+    * [Service]: Configuration items specific to that service (8 fields)
+    * [Install]: Describes what happens with a unit when it is enabled or
+      disabled (4 fields)
+        * Alias: Sets additional names that can denote the service in systemctl
+        * Also: Additional units required to be enabled or disabled
+        * RequiredBy: Other units that need this service
+        * WantedBy: Which target unit manages this service
+* For information:
+    * man -k systemd
+    * man systemd.directives
+
+### Focusing on Target Unit Files
+
+* Primary purpose of target unit files is to group together various services to
+  start at system boot time.
+* The default target file, default.target, is symbolically linked to the target
+  unit file used at system boot time.
+* Get the default: systemctl get-default
+* Show that the target file encompasses: systemctl cat graphical.target
+
+### Looking at *systemctl*
+
+* Systemctl command
+    * status: Show status of a service (disabled/enabled, running/inactive)
+        * systemctl status ntpd
+        * systemctl status sshd
 
 # GNU Free Documentation License
 
